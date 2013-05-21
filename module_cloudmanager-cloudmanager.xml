@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_cloudmanager-cloudmanager" default="compile.module.cloudmanager-cloudmanager">
+  <dirname property="module.cloudmanager-cloudmanager.basedir" file="${ant.file.module_cloudmanager-cloudmanager}"/>
+  
+  <property name="module.jdk.home.cloudmanager-cloudmanager" value="${jdk.home.android_4.2.2}"/>
+  <property name="module.jdk.bin.cloudmanager-cloudmanager" value="${jdk.bin.android_4.2.2}"/>
+  <property name="module.jdk.classpath.cloudmanager-cloudmanager" value="jdk.classpath.android_4.2.2"/>
+  
+  <property name="compiler.args.cloudmanager-cloudmanager" value="${compiler.args}"/>
+  
+  <property name="cloudmanager-cloudmanager.output.dir" value="${module.cloudmanager-cloudmanager.basedir}/build/classes/production/CloudManager-CloudManager"/>
+  <property name="cloudmanager-cloudmanager.testoutput.dir" value="${module.cloudmanager-cloudmanager.basedir}/build/classes/test/CloudManager-CloudManager"/>
+  
+  <path id="cloudmanager-cloudmanager.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="cloudmanager-cloudmanager.module.production.classpath">
+    <path refid="${module.jdk.classpath.cloudmanager-cloudmanager}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="cloudmanager-cloudmanager.runtime.production.module.classpath">
+    <pathelement location="${cloudmanager-cloudmanager.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="cloudmanager-cloudmanager.module.classpath">
+    <path refid="${module.jdk.classpath.cloudmanager-cloudmanager}"/>
+    <pathelement location="${cloudmanager-cloudmanager.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="cloudmanager-cloudmanager.runtime.module.classpath">
+    <pathelement location="${cloudmanager-cloudmanager.testoutput.dir}"/>
+    <pathelement location="${cloudmanager-cloudmanager.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.cloudmanager-cloudmanager">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.cloudmanager-cloudmanager">
+    <patternset refid="excluded.from.module.cloudmanager-cloudmanager"/>
+  </patternset>
+  
+  <path id="cloudmanager-cloudmanager.module.sourcepath">
+    <dirset dir="${module.cloudmanager-cloudmanager.basedir}/CloudManager">
+      <include name="build/source/r/debug"/>
+      <include name="build/source/aidl/debug"/>
+      <include name="build/source/rs/debug"/>
+      <include name="build/source/buildConfig/debug"/>
+      <include name="build/res/rs/debug"/>
+      <include name="src/main/java"/>
+      <include name="src/main/res"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.cloudmanager-cloudmanager" depends="compile.module.cloudmanager-cloudmanager.production,compile.module.cloudmanager-cloudmanager.tests" description="Compile module CloudManager-CloudManager"/>
+  
+  <target name="compile.module.cloudmanager-cloudmanager.production" depends="register.custom.compilers" description="Compile module CloudManager-CloudManager; production classes">
+    <mkdir dir="${cloudmanager-cloudmanager.output.dir}"/>
+    <javac2 destdir="${cloudmanager-cloudmanager.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.cloudmanager-cloudmanager}/javac">
+      <compilerarg line="${compiler.args.cloudmanager-cloudmanager}"/>
+      <bootclasspath refid="cloudmanager-cloudmanager.module.bootclasspath"/>
+      <classpath refid="cloudmanager-cloudmanager.module.production.classpath"/>
+      <src refid="cloudmanager-cloudmanager.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.cloudmanager-cloudmanager"/>
+    </javac2>
+    
+    <copy todir="${cloudmanager-cloudmanager.output.dir}">
+      <fileset dir="${module.cloudmanager-cloudmanager.basedir}/CloudManager/build/source/r/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.cloudmanager-cloudmanager.basedir}/CloudManager/build/source/aidl/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.cloudmanager-cloudmanager.basedir}/CloudManager/build/source/rs/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.cloudmanager-cloudmanager.basedir}/CloudManager/build/source/buildConfig/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.cloudmanager-cloudmanager.basedir}/CloudManager/build/res/rs/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.cloudmanager-cloudmanager.basedir}/CloudManager/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.cloudmanager-cloudmanager.basedir}/CloudManager/src/main/res">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.cloudmanager-cloudmanager.tests" depends="register.custom.compilers,compile.module.cloudmanager-cloudmanager.production" description="compile module CloudManager-CloudManager; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.cloudmanager-cloudmanager" description="cleanup module">
+    <delete dir="${cloudmanager-cloudmanager.output.dir}"/>
+    <delete dir="${cloudmanager-cloudmanager.testoutput.dir}"/>
+  </target>
+</project>
